@@ -8,6 +8,8 @@ defmodule DiscussWeb.Router do
     plug :put_root_layout, {DiscussWeb.Layouts, :root}
     plug :protect_from_forgery
     plug :put_secure_browser_headers
+    plug Ueberauth
+    plug DiscussWeb.Plugs.SetUser
   end
 
   pipeline :api do
@@ -31,6 +33,7 @@ defmodule DiscussWeb.Router do
 
     get "/:provider", AuthController, :request
     get "/:provider/callback", AuthController, :callback
+    delete "/signout", AuthController, :signout
 
   end
 
